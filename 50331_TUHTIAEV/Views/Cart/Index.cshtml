@@ -1,0 +1,43 @@
+﻿@model _50331_TUHTIAEV.Models.Cart
+
+@{
+    ViewBag.Title = "Корзина";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Ваша корзина</h2>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Фото товара</th>
+            <th>Наименование</th>
+            <th>Вес</th>
+            <th>Количество</th>
+            <th>Цена за единицу</th>
+            <th>Всего по позиции</th>
+            
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.GetItems())
+        {
+            <tr>
+                <td>
+                    <img width="50" height="50" src="@Url.Action("GetImage", "AutoPart", new{autoPartId=item.autoPart.AutoPartId })"
+                         class="img-thumbnail">
+                </td>
+                <td>@item.autoPart.AutoPartName</td>
+                <td>@item.autoPart.Weight </td>
+                <td>@item.quantity</td>
+                <td>@item.autoPart.Price</td>
+                <td>@(item.autoPart.Price*item.quantity)</td>
+            </tr>
+        }
+        <tr>
+            <td colspan="3">Всего</td>
+            <td>@Model.GetTotal()</td>
+        </tr>
+    </tbody>
+</table>
+<a href="@TempData["returnUrl"]" class="btn btn-info">Назад</a>
+
